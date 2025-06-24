@@ -15,7 +15,7 @@ export default function Comment({
   const [editedText, setEditedText] = useState(comment.text);
   const [showOptions, setShowOptions] = useState(false);
   const MAX_NESTING = 3;
-  const url = "http://localhost:3000";
+  const url = "https://roadmap-app-backend.onrender.com";
   const addReply = async (parentId, roadmapId) => {
     if (replyText.trim()) {
       try {
@@ -73,7 +73,7 @@ export default function Comment({
       await axios.delete(`${url}/api/comment/delete-comment?commentId=${id}`, {
         withCredentials: true,
       });
-      fetchComments(); // Re-fetch comments after deletion
+      fetchComments();
     } catch (err) {
       const message =
         err.response?.data?.message || "Something went wrong during deleting";
@@ -132,10 +132,12 @@ export default function Comment({
         </div>
 
         <div className="relative">
-          <FaEllipsisV
-            onClick={() => setShowOptions(!showOptions)}
-            className="text-gray-400 hover:text-black cursor-pointer"
-          />
+          {comment.user._id === true && (
+            <FaEllipsisV
+              onClick={() => setShowOptions(!showOptions)}
+              className="text-gray-400 hover:text-black cursor-pointer"
+            />
+          )}
           {showOptions && (
             <div className="absolute right-0 mt-2 bg-white shadow-md rounded border z-10 w-24 text-sm">
               <button

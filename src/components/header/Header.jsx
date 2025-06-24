@@ -6,7 +6,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const token = document.cookie;
-  const url = "http://localhost:3000";
+  const url = "https://roadmap-app-backend.onrender.com";
   const logoutHandler = async () => {
     try {
       const res = await axios.post(
@@ -35,7 +35,6 @@ export default function Header() {
             </Link>
           </div>
 
-          
           <div className="hidden md:flex items-center space-x-4">
             {!token ? (
               <>
@@ -62,7 +61,6 @@ export default function Header() {
             )}
           </div>
 
-        
           <div className="md:hidden">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -84,7 +82,6 @@ export default function Header() {
         </div>
       </div>
 
-     
       {menuOpen && (
         <div className="md:hidden px-4 pb-4">
           {!token ? (

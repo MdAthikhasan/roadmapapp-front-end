@@ -54,11 +54,11 @@ export default function Home() {
   const [sortType, setSortType] = useState("Most Upvotes");
   const [roadmapData, setRoadmapData] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const url = "https://roadmap-app-backend.onrender.com";
   useEffect(() => {
     const fetchRoadmaps = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/roadmapitem/");
+        const response = await fetch(`${url}/api/roadmapitem/`);
         const data = await response.json();
         setLoading(false);
         setRoadmapData(data.data);
