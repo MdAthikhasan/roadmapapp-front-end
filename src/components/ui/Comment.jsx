@@ -16,6 +16,7 @@ export default function Comment({
   const [showOptions, setShowOptions] = useState(false);
   const MAX_NESTING = 3;
   const userId = JSON.parse(localStorage.getItem("userId"));
+  const token = JSON.parse(localStorage.getItem("token"));
   console.log("userid", userId);
   const url = "https://roadmap-app-backend.onrender.com";
   const addReply = async (parentId, roadmapId) => {
@@ -56,7 +57,9 @@ export default function Comment({
           text: editedText,
         },
         {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       comment.text = editedText;
@@ -73,7 +76,9 @@ export default function Comment({
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${url}/api/comment/delete-comment?commentId=${id}`, {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       fetchComments();
     } catch (err) {

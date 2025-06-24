@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 const Sign_in = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
-  const token = document.cookie;
+  const token = JSON.parse(localStorage.getItem("token"));
   const url = "https://roadmap-app-backend.onrender.com";
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,9 +17,15 @@ const Sign_in = () => {
 
     try {
       const res = await axios.post(`${url}/api/user/sign_in`, formData, {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       toast.success(res.data?.message);
+      const token = res.data?.data?.token; // make sure your backend returns the token
+      if (token) {
+        localStorage.setItem("token", JSON.stringify(token));
+      }
       navigate("/");
     } catch (e) {
       const message =

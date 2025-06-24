@@ -11,7 +11,7 @@ export default function RoadmapCard({ item, setRoadmapData }) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const url = "https://roadmap-app-backend.onrender.com";
- 
+  const token = JSON.parse(localStorage.getItem("token"));
   const fetchComments = async () => {
     try {
       const res = await axios.get(
@@ -37,7 +37,9 @@ export default function RoadmapCard({ item, setRoadmapData }) {
             text: newComment,
           },
           {
-            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
 
@@ -56,7 +58,9 @@ export default function RoadmapCard({ item, setRoadmapData }) {
         `${url}/api/roadmapItem/${item._id}/upvote`,
         {},
         {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 

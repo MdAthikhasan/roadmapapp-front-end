@@ -5,17 +5,13 @@ import { toast } from "react-toastify";
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const token = document.cookie;
+  const token = JSON.parse(localStorage.getItem("token"));
   const url = "https://roadmap-app-backend.onrender.com";
   const logoutHandler = async () => {
     try {
-      const res = await axios.post(
-        `${url}/api/user/log_out`,
-        {},
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axios.post(`${url}/api/user/log_out`, {});
+      localStorage.removeItem("token");
+
       toast.success(res.data?.message);
       navigate("/");
     } catch (e) {
