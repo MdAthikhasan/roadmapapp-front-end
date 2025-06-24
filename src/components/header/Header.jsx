@@ -6,7 +6,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const token = JSON.parse(localStorage.getItem("token"));
-  const url = "https://roadmap-app-backend.onrender.com";
+  const url = import.meta.env.VITE_URL;
   const logoutHandler = async () => {
     try {
       const res = await axios.post(`${url}/api/user/log_out`, {});

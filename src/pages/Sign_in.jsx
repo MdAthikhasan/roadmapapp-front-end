@@ -7,7 +7,7 @@ const Sign_in = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
   const token = JSON.parse(localStorage.getItem("token"));
-  const url = "https://roadmap-app-backend.onrender.com";
+  const url = import.meta.env.VITE_URL;
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -16,13 +16,10 @@ const Sign_in = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(`${url}/api/user/sign_in`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.post(`${url}/api/user/sign_in`, formData);
       toast.success(res.data?.message);
-      const token = res.data?.data?.token; // make sure your backend returns the token
+      const token = res.data?.data;
+
       if (token) {
         localStorage.setItem("token", JSON.stringify(token));
       }

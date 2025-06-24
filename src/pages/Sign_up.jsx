@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Sign_up = () => {
-  const url = "https://roadmap-app-backend.onrender.com";
+  const url = import.meta.env.VITE_URL;
   const [formData, setFormData] = useState({
     name: "",
     email: "",

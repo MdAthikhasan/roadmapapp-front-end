@@ -10,7 +10,7 @@ export default function RoadmapCard({ item, setRoadmapData }) {
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const url = "https://roadmap-app-backend.onrender.com";
+  const url = import.meta.env.VITE_URL;
   const token = JSON.parse(localStorage.getItem("token"));
   const fetchComments = async () => {
     try {

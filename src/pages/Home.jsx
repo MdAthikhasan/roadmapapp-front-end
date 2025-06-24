@@ -54,7 +54,7 @@ export default function Home() {
   const [sortType, setSortType] = useState("Most Upvotes");
   const [roadmapData, setRoadmapData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const url = "https://roadmap-app-backend.onrender.com";
+  const url = import.meta.env.VITE_URL;
   useEffect(() => {
     const fetchRoadmaps = async () => {
       try {
@@ -87,9 +87,9 @@ export default function Home() {
 
   const categories = [
     "All",
-    ...new Set(roadmapData.map((item) => item.category)),
+    ...new Set(roadmapData?.map((item) => item.category)),
   ];
-  const statuses = ["All", ...new Set(roadmapData.map((item) => item.status))];
+  const statuses = ["All", ...new Set(roadmapData?.map((item) => item.status))];
 
   return (
     <div className="max-w-4xl mx-auto mt-20 space-y-8 p-4">
@@ -108,7 +108,7 @@ export default function Home() {
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
         >
-          {statuses.map((status) => (
+          {statuses?.map((status) => (
             <option key={status}>{status}</option>
           ))}
         </select>
@@ -123,7 +123,7 @@ export default function Home() {
       </div>
       {loading
         ? Array.from({ length: 3 }).map((_, i) => <RoadmapCardLoader key={i} />)
-        : filterSortRoadmaps().map((item) => (
+        : filterSortRoadmaps()?.map((item) => (
             <RoadmapCard
               key={item._id}
               setRoadmapData={setRoadmapData}

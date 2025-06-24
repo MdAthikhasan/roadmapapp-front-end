@@ -18,7 +18,7 @@ export default function Comment({
   const userId = JSON.parse(localStorage.getItem("userId"));
   const token = JSON.parse(localStorage.getItem("token"));
   console.log("userid", userId);
-  const url = "https://roadmap-app-backend.onrender.com";
+  const url = import.meta.env.VITE_URL;
   const addReply = async (parentId, roadmapId) => {
     if (replyText.trim()) {
       try {
@@ -30,7 +30,9 @@ export default function Comment({
             parent: parentId, // replying to current comment
           },
           {
-            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         setReplyText("");
