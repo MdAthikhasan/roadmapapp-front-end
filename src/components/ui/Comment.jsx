@@ -15,6 +15,8 @@ export default function Comment({
   const [editedText, setEditedText] = useState(comment.text);
   const [showOptions, setShowOptions] = useState(false);
   const MAX_NESTING = 3;
+  const userId = JSON.parse(localStorage.getItem("userId"));
+  console.log("userid", userId);
   const url = "https://roadmap-app-backend.onrender.com";
   const addReply = async (parentId, roadmapId) => {
     if (replyText.trim()) {
@@ -132,7 +134,7 @@ export default function Comment({
         </div>
 
         <div className="relative">
-          {comment.user._id === true && (
+          {comment.user._id === userId && (
             <FaEllipsisV
               onClick={() => setShowOptions(!showOptions)}
               className="text-gray-400 hover:text-black cursor-pointer"

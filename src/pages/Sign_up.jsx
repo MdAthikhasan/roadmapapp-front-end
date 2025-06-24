@@ -22,8 +22,15 @@ const Sign_up = () => {
 
     try {
       const res = await axios.post(`${url}/api/user/sign_up`, formData);
+
       if (res.data?.success) {
-        toast.success(res.data.message);
+        toast.success(res.data?.message);
+        console.log(res.data?.data?._id.toString());
+
+        localStorage.setItem(
+          "userId",
+          JSON.stringify(res.data?.data?._id.toString())
+        );
         navigate("/sign_in");
       }
     } catch (error) {

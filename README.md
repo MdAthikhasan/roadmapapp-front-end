@@ -1,12 +1,25 @@
-# React + Vite
+# 🚀 Roadmap App - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend of the Roadmap application built with **React**, **Tailwind CSS**, and **Axios**. It connects to a backend API to manage user authentication, comments, roadmap items, and more.
 
-Currently, two official plugins are available:
+## 📦 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React 18+
+- Tailwind CSS
+- Axios
+- React Router
+- Toastify
+- React Icons
 
-## Expanding the ESLint configuration
+## 🌐 Live Demo
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+[Live Site](https://roadmapapp-front-end.vercel.app)
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/MdAthikhasan/roadmapapp-front-end
+cd roadmap-frontend
+```
