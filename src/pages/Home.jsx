@@ -72,15 +72,15 @@ export default function Home() {
   const filterSortRoadmaps = () => {
     let items = [...roadmapData];
     if (filterCategory !== "All") {
-      items = items.filter((item) => item.category === filterCategory);
+      items = items?.filter((item) => item.category === filterCategory);
     }
     if (filterStatus !== "All") {
-      items = items.filter((item) => item.status === filterStatus);
+      items = items?.filter((item) => item.status === filterStatus);
     }
     if (sortType === "Most Upvotes") {
-      items.sort((a, b) => b.upvotes - a.upvotes);
+      items?.sort((a, b) => b.upvotes - a.upvotes);
     } else if (sortType === "Least Upvotes") {
-      items.sort((a, b) => a.upvotes - b.upvotes);
+      items?.sort((a, b) => a.upvotes - b.upvotes);
     }
     return items;
   };

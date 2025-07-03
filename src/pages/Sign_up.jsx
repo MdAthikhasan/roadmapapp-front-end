@@ -27,16 +27,22 @@ const Sign_up = () => {
         toast.success(res.data?.message);
         console.log(res.data?.data?._id.toString());
 
-        localStorage.setItem(
-          "userId",
-          JSON.stringify(res.data?.data?._id.toString())
-        );
+        localStorage.setItem("userId", JSON.stringify(res.data?.data?._id));
         navigate("/sign_in");
       }
     } catch (error) {
       const message =
         error.response?.data?.message || "Something went wrong during signup";
-      toast.error(message);
+
+      const validationErrors = error.response?.data?.data;
+
+      if (Array.isArray(validationErrors)) {
+        validationErrors.forEach((err) =>
+          toast.error(`${err.field}: ${err.message}`)
+        );
+      } else {
+        toast.error(message);
+      }
     }
   };
 
