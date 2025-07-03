@@ -69,6 +69,12 @@ export default function Comment({
         const message =
           e.response?.data?.message || "Something went wrong during reply";
         toast.error(message);
+        setUi((prev) => ({
+          ...prev,
+          replyText: "",
+          replying: false,
+          isLoading: false,
+        }));
       }
     },
     [ui.replyText, userInfo.token, url, fetchComments]
@@ -117,9 +123,11 @@ export default function Comment({
         setUi((prev) => ({ ...prev, isLoading: false }));
         toast.success("Comment deleted successfully");
       } catch (err) {
+        setUi((prev) => ({ ...prev, isLoading: false }));
         const message =
           err.response?.data?.message || "Something went wrong during deleting";
         toast.error(message);
+        setUi((prev) => ({ ...prev, isLoading: false }));
       }
     },
     [userInfo.token, url, fetchComments]

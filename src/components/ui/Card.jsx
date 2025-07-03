@@ -73,6 +73,7 @@ export default function RoadmapCard({ item }) {
       fetchComments();
       setUi((cur) => ({ ...cur, newComment: "", isLoadingBtn: false }));
     } catch (e) {
+      setUi((cur) => ({ ...cur, newComment: "", isLoadingBtn: false }));
       const message =
         e.response?.data?.message || "Something went wrong during comment";
       toast.error(message);

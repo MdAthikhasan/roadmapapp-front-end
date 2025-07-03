@@ -1,17 +1,26 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
+
 export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [state, setState] = useState({ menuOpen: false, token: null });
   const navigate = useNavigate();
-  const token = JSON.parse(localStorage.getItem("token"));
   const url = import.meta.env.VITE_URL;
+
+  useEffect(() => {
+    setState((prev) => ({
+      ...prev,
+      token: JSON.parse(localStorage.getItem("token")),
+    }));
+  }, []);
+
+  // Logout handler
   const logoutHandler = async () => {
     try {
       const res = await axios.post(`${url}/api/user/log_out`, {});
       localStorage.removeItem("token");
-
+      setState((prev) => ({ ...prev, token: null }));
       toast.success(res.data?.message);
       navigate("/");
     } catch (e) {
@@ -20,6 +29,7 @@ export default function Header() {
       toast.error(message);
     }
   };
+
   return (
     <header className="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,7 +42,7 @@ export default function Header() {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            {!token ? (
+            {!state.token ? (
               <>
                 <Link
                   to="/sign_up"
@@ -59,7 +69,9 @@ export default function Header() {
 
           <div className="md:hidden">
             <button
-              onClick={() => setMenuOpen(!menuOpen)}
+              onClick={() =>
+                setState((prev) => ({ ...prev, menuOpen: !prev.menuOpen }))
+              }
               className="text-gray-700 focus:outline-none"
             >
               <svg
@@ -78,9 +90,9 @@ export default function Header() {
         </div>
       </div>
 
-      {menuOpen && (
+      {state.menuOpen && (
         <div className="md:hidden px-4 pb-4">
-          {!token ? (
+          {!state.token ? (
             <>
               <Link
                 to="/sign_up"

@@ -1,42 +1,56 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Sign_in = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [state, setState] = useState({
+    formData: { email: "", password: "" },
+    token: null,
+  });
   const navigate = useNavigate();
-  const token = JSON.parse(localStorage.getItem("token"));
   const url = import.meta.env.VITE_URL;
+
+  useEffect(() => {
+    setState((prev) => ({
+      ...prev,
+      token: JSON.parse(localStorage.getItem("token")),
+    }));
+  }, []);
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setState((prev) => ({
+      ...prev,
+      formData: { ...prev.formData, [e.target.name]: e.target.value },
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const res = await axios.post(`${url}/api/user/sign_in`, formData);
+      const res = await axios.post(`${url}/api/user/sign_in`, state.formData);
       toast.success(res.data?.message);
       const token = res.data?.data;
-
       if (token) {
         localStorage.setItem("token", JSON.stringify(token));
+        setState((prev) => ({ ...prev, token }));
+        navigate("/");
       }
-      navigate("/");
     } catch (e) {
       const message =
         e.response?.data?.message || "Something went wrong during sign-in";
       toast.error(message);
     }
   };
-  if (token) {
+
+  if (state.token) {
     return (
       <div className="text-black text-center min-h-screen flex items-center justify-center bg-gray-100">
         You are logged in
       </div>
     );
   }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form
@@ -47,7 +61,7 @@ const Sign_in = () => {
         <input
           type="email"
           name="email"
-          value={formData.email}
+          value={state.formData.email}
           onChange={handleChange}
           placeholder="Email"
           className="w-full p-2 mb-4 border rounded"
@@ -56,7 +70,7 @@ const Sign_in = () => {
         <input
           type="password"
           name="password"
-          value={formData.password}
+          value={state.formData.password}
           onChange={handleChange}
           placeholder="Password"
           className="w-full p-2 mb-4 border rounded"
