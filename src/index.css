@@ -1,8 +1,36 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
 :root {
-  --bg: #f9fafb;
-  --text: #111827;
-  --font-inter: inter;
-  --bg-gray: #f3f4f6;
+  --bg: #f8fafc;
+  --text: #0f172a;
+  --font-inter: "Inter", sans-serif;
+  --bg-gray: #f1f5f9;
   --bg-white: #ffffff;
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --secondary: #64748b;
+}
+
+body {
+  background: linear-gradient(135deg, var(--bg) 0%, #e2e8f0 100%);
+  min-height: 100vh;
+  font-family: var(--font-inter);
+}
+
+/* Add smooth transitions */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Card hover effects */
+.card-hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Button hover effects */
+.button-hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

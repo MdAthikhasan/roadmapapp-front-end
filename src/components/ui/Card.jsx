@@ -8,6 +8,12 @@ import { toast } from "react-toastify";
 // Internal imports
 import Comment from "./Comment";
 
+const statusColors = {
+  "In Progress": "bg-yellow-100 text-yellow-800",
+  Planned: "bg-blue-100 text-blue-800",
+  Live: "bg-green-100 text-green-800",
+};
+
 export default function RoadmapCard({ item }) {
   // UI state
   const [ui, setUi] = useState({
@@ -118,27 +124,35 @@ export default function RoadmapCard({ item }) {
   }, [fetchComments]);
 
   return (
-    <div className="bg-white shadow-md rounded p-4">
-      <h2 className="text-xl font-bold">{item.title}</h2>
-      <p className="text-black font-medium mt-2">{item.description}</p>
+    <div className="bg-white/80 backdrop-blur-sm shadow-lg rounded-xl p-6 hover:card-hover transition-all duration-300">
+      <h2 className="text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors duration-300">
+        {item.title}
+      </h2>
+      <p className="text-gray-600 mt-3 leading-relaxed">{item.description}</p>
 
-      <div className="flex mt-3 text-md text-black">
-        <p className="mr-4">
-          <span className="font-medium">Category:</span> {item.category}
-        </p>
-        <p>
-          <span className="font-medium">Status:</span> {item.status}
-        </p>
-      </div>
-
-      <div className="flex justify-between items-center mt-4 border-t pt-3">
-        <button
-          onClick={toggleUpvote}
-          className={`flex items-center text-lg font-semibold gap-1 cursor-pointer ${
-            isUpvoted ? "text-blue-700" : "text-blue-400 hover:text-blue-700"
+      <div className="flex flex-wrap gap-4 mt-4">
+        <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-sm font-medium">
+          {item.category}
+        </span>
+        <span
+          className={`px-3 py-1 rounded-full text-sm font-medium ${
+            statusColors[item.status]
           }`}
         >
-          <BiUpvote /> {upvotes}
+          {item.status}
+        </span>
+      </div>
+
+      <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-100">
+        <button
+          onClick={toggleUpvote}
+          className={`flex items-center cursor-pointer px-4 py-2 rounded-lg transition-all duration-300 ${
+            isUpvoted
+              ? "bg-blue-100 text-blue-700"
+              : "text-blue-600 hover:bg-blue-50"
+          }`}
+        >
+          <BiUpvote className="text-xl mr-2" /> {upvotes}
         </button>
 
         <button
